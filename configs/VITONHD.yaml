@@ -98,3 +98,6 @@ default_prompt: ""
 log_images_kwargs:
   unconditional_guidance_scale: 5.0
 
+# Add the correct path to your test_pairs.txt
+data_root: ./data/test
+

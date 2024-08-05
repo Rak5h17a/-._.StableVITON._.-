@@ -154,6 +154,7 @@ class VITONHDDataset(Dataset):
         im_names = []
         c_names = []
         with open(opj(self.drd, f"{self.data_type}_pairs.txt"), "r") as f:
+        
             for line in f.readlines():
                 im_name, c_name = line.strip().split()
                 im_names.append(im_name)
@@ -163,7 +164,8 @@ class VITONHDDataset(Dataset):
         self.im_names = im_names
         
         self.c_names = dict()
-        self.c_names["paired"] = im_names
+        #self.c_names["paired"] = im_names
+        self.c_names["paired"] = c_names
         self.c_names["unpaired"] = c_names
 
     def __len__(self):
@@ -172,6 +174,8 @@ class VITONHDDataset(Dataset):
     def __getitem__(self, idx):
         img_fn = self.im_names[idx]
         cloth_fn = self.c_names[self.pair_key][idx]
+        print(f"Loading person image from: {opj(self.drd, self.data_type, 'image', img_fn)}")
+        print(f"Loading cloth image from: {opj(self.drd, self.data_type, 'cloth', cloth_fn)}")
         if self.transform_size is None and self.transform_color is None:
             agn = imread(
                 opj(self.drd, self.data_type, "agnostic-v3.2", self.im_names[idx]), 
